@@ -1,0 +1,34 @@
+{
+  "project_info": {
+    "project_number": "389508480855",
+    "firebase_url": "https://ttps-be740-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "ttps-be740",
+    "storage_bucket": "ttps-be740.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:389508480855:android:9d5b9ec2fb7c125e1e4812",
+        "android_client_info": {
+          "package_name": "es.udc.psi.ttps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM9fW0Wu_LrO0OO_m_yZlD1imRbHJWwfg"
+        }
+      ],
+      "services": {
+        "firebase": {
+          "database_url": "https://ttps-be740-default-rtdb.europe-west1.firebasedatabase.app"
+        },
+
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
