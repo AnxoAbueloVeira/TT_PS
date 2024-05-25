@@ -7,11 +7,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,18 +46,16 @@ public class MainActivity extends AppCompatActivity {
     private void signInAnonymously() {
         mAuth.signInAnonymously().addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(MainActivity.this, "Authentication sucess", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Authentication success", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-
     private void createGame() {
         String code = generateCode();
-
-        database.child("games").child(code).setValue("waiting").addOnCompleteListener(task -> {
+        database.child("games").child(code).child("status").setValue("waiting").addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Game Code", code);
@@ -81,15 +76,11 @@ public class MainActivity extends AppCompatActivity {
         String code = et_code.getText().toString();
 
         database.child("games").child(code).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                if (task.getResult().exists()) {
-                    Intent intent = new Intent(this, GameActivity.class);
-                    intent.putExtra("GAME_CODE",code);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "Código de sala no válido", Toast.LENGTH_SHORT).show();
-                }
-            }else {
+            if (task.isSuccessful() && task.getResult().exists()) {
+                Intent intent = new Intent(this, GameActivity.class);
+                intent.putExtra("GAME_CODE", code);
+                startActivity(intent);
+            } else {
                 Toast.makeText(this, "Código de sala no válido", Toast.LENGTH_SHORT).show();
             }
         });
