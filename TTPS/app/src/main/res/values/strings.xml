@@ -3,4 +3,8 @@
     <string name="Hint">Ingrese el código de la sala</string>
     <string name="but_create">Crear Sala</string>
     <string name="but_join">Unirse a Sala</string>
+    <string name="cod_sala">Código de la sala: </string>
+    <string name="turno">"Turno: "</string>
+    <string name="winner">¡Ganador!</string>
+    <string name="Looser">¡Perdedor!</string>
 </resources>

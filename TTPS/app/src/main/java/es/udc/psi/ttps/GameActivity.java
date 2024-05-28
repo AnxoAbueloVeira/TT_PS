@@ -1,6 +1,9 @@
 package es.udc.psi.ttps;
 
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +18,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 
 public class GameActivity extends AppCompatActivity {
 
@@ -35,7 +39,7 @@ public class GameActivity extends AppCompatActivity {
         String code = getIntent().getStringExtra("GAME_CODE");
         gameRef = FirebaseDatabase.getInstance().getReference().child("games").child(code);
 
-        tv_code.setText("Código de la sala: " + code);
+        tv_code.setText(tv_code.getText().toString() + code);
 
         initButtons();
         setButtons();
@@ -141,15 +145,32 @@ public class GameActivity extends AppCompatActivity {
     private void endGame(String winner) {
         isGameActive = false;
         String message;
+        TextView result;
+
         if (winner != null) {
-            message = "Ganador: " + winner;
+            if (winner.equals(playerSymbol)) {
+                message = "¡Ganador!";
+                result = findViewById(R.id.tv_winner);
+            }else {
+                message = "¡Perdedor!";
+                result = findViewById(R.id.tv_loser);
+            }
         } else {
             message = "Empate";
+            result = null;
         }
         gameRef.child("status").setValue(message);
 
         for (Button button : buttons) {
             button.setEnabled(false);
+        }
+
+        if (result != null) {
+            result.setVisibility(View.VISIBLE);
+            Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+            result.startAnimation(fadeIn);
+        } else {
+            Toast.makeText(this, message, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -160,7 +181,7 @@ public class GameActivity extends AppCompatActivity {
                 int index = Integer.parseInt(snapshot.getKey());
                 String value = snapshot.getValue(String.class);
                 buttons[index].setText(value);
-                checkWinner(); // Check winner after every move
+                checkWinner();
             }
 
             @Override
@@ -168,7 +189,7 @@ public class GameActivity extends AppCompatActivity {
                 int index = Integer.parseInt(snapshot.getKey());
                 String value = snapshot.getValue(String.class);
                 buttons[index].setText(value);
-                checkWinner(); // Check winner after every move
+                checkWinner();
             }
 
             @Override

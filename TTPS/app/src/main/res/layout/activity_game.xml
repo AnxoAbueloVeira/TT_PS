@@ -1,40 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".GameActivity">
 
     <TextView
         android:id="@+id/tv_code"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text="@string/cod_sala"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/tv_turn"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""/>
+        android:text="@string/turno"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_code"
+        android:textSize="24sp"
+        android:layout_marginTop="8dp" />
 
     <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/gridLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:rowCount="3"
         android:columnCount="3"
-        android:rowCount="3">
+        android:layout_marginTop="32dp">
 
-        <Button android:id="@+id/but_0"/>
-        <Button android:id="@+id/but_1"/>
-        <Button android:id="@+id/but_2"/>
-        <Button android:id="@+id/but_3"/>
-        <Button android:id="@+id/but_4"/>
-        <Button android:id="@+id/but_5"/>
-        <Button android:id="@+id/but_6"/>
-        <Button android:id="@+id/but_7"/>
-        <Button android:id="@+id/but_8"/>
+        <Button
+            android:id="@+id/but_0"
+            style="@style/TicTacToeButton" />
 
+        <Button
+            android:id="@+id/but_1"
+            style="@style/TicTacToeButton" />
+
+        <Button
+            android:id="@+id/but_2"
+            style="@style/TicTacToeButton" />
+
+        <Button
+            android:id="@+id/but_3"
+            style="@style/TicTacToeButton" />
+
+        <Button
+            android:id="@+id/but_4"
+            style="@style/TicTacToeButton" />
+
+        <Button
+            android:id="@+id/but_5"
+            style="@style/TicTacToeButton" />
+
+        <Button
+            android:id="@+id/but_6"
+            style="@style/TicTacToeButton" />
+
+        <Button
+            android:id="@+id/but_7"
+            style="@style/TicTacToeButton" />
+
+        <Button
+            android:id="@+id/but_8"
+            style="@style/TicTacToeButton" />
     </GridLayout>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/tv_winner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/winner"
+        android:textSize="32sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_loser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Looser"
+        android:textSize="32sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:gravity="center" />
+
+</RelativeLayout>

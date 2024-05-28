@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
+    private String TAG = "_TAG";
     EditText et_code;
     Button but_create, but_join;
 
@@ -46,9 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private void signInAnonymously() {
         mAuth.signInAnonymously().addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
-                Toast.makeText(MainActivity.this, "Authentication success", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"Authentication success");
             } else {
-                Toast.makeText(MainActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                Log.d(TAG,"Authentication failed");
             }
         });
     }
@@ -87,6 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private String generateCode() {
-        return UUID.randomUUID().toString().substring(0, 6);
+        return UUID.randomUUID().toString().substring(0, 6).toUpperCase();
     }
 }
