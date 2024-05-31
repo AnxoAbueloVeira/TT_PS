@@ -2,7 +2,7 @@
     <string name="app_name">TT.PS</string>
     <string name="Hint">Enter the room code</string>
     <string name="but_create_tictactoe">Create TicTacToe</string>
-    <string name="but_create_rps">Create scissors, paper, rock</string>
+    <string name="but_create_rps">Create rock, paper, scissors</string>
     <string name="but_join">Join room</string>
     <string name="cod_sala">Room Code: </string>
     <string name="turno">"Turn: "</string>

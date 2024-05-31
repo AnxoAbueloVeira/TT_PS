@@ -2,16 +2,12 @@ package es.udc.psi.ttps;
 
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -63,14 +59,6 @@ public class RPSGameActivity extends AppCompatActivity {
                         gameRef.child("players").get().addOnCompleteListener(playerTask -> {
                             if (playerTask.isSuccessful()) {
                                 long playerCount = playerTask.getResult().getChildrenCount();
-                                if (playerCount == 1) {
-                                    // gameRef.child("playerId").child(currentUserUid).setValue(1);
-
-                                }
-                                if (playerCount == 2) {
-                                    // gameRef.child("playerId").child(currentUserUid).setValue(2);
-
-                                }
                                 if (playerCount > 2) {
                                     isGameActive = false;
                                     Toast.makeText(this, getString(R.string.toast_room_full), Toast.LENGTH_SHORT).show();
@@ -88,14 +76,11 @@ public class RPSGameActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     playerId = snapshot.getValue(Integer.class);
-                } else {
-                    // Manejar el caso donde no se encuentra ningún playerId asociado al usuario actual.
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Manejar errores de Firebase Database.
             }
         });
 
@@ -105,7 +90,8 @@ public class RPSGameActivity extends AppCompatActivity {
     private void makeMove(String move) {
         if (isGameActive) {
             playerMove = move;
-            disableButtons(); // Llamada para deshabilitar los botones
+            // Llamada para deshabilitar los botones
+            disableButtons();
             gameRef.child("moves").child(FirebaseAuth.getInstance().getUid()).setValue(move).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     checkWinner();
@@ -143,12 +129,12 @@ public class RPSGameActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Manejar errores de Firebase Database.
             }
         });
     }
 
     private void determineWinner(String playerMove, String opponentMove, String opponentUid) {
+        //Lógica del Piedra, papel o tijeras
         String result;
         if (playerMove.equals(opponentMove)) {
             result = "Empate";
@@ -170,7 +156,7 @@ public class RPSGameActivity extends AppCompatActivity {
         String opponentResult;
         TextView animation;
 
-        // Determine opponent's result based on player's result
+        // Determinamos el resultado del oponente en base al del jugador
         if (result.equals("¡Ganador!")) {
             animation = findViewById(R.id.tv_winner);
             opponentResult = "¡Perdedor!";
@@ -182,11 +168,11 @@ public class RPSGameActivity extends AppCompatActivity {
             opponentResult = "Empate";
         }
 
-        // Update the state for both players
+        // Actualizamos el estado de los jugadores
         gameRef.child("state").child(currentUserUid).setValue(result);
         gameRef.child("state").child(opponentUid).setValue(opponentResult);
 
-        // Animate result for both players
+        // Mostramos la animación correspondiente a los estados anteriores
         animateResult(animation);
 
         tv_status.setText(result);
@@ -217,17 +203,14 @@ public class RPSGameActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                // Manejar la eliminación si es necesario
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                // Manejar el movimiento si es necesario
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                // Manejar errores de Firebase Database.
             }
         });
     }
@@ -237,7 +220,7 @@ public class RPSGameActivity extends AppCompatActivity {
         String uid = snapshot.getKey();
         if (uid != null && value != null) {
             if (uid.equals(currentUserUid)) {
-                // Update UI for current player
+                // Actualizamos IU del jugador
                 tv_status.setText(value);
                 animateResultBasedOnValue(value);
             }
