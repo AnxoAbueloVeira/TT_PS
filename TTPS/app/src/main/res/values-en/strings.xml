@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">TT.PS</string>
+    <string name="Hint">Enter de room code</string>
+    <string name="but_create_tictactoe">Crete TicTacToe</string>
+    <string name="but_create_rps">Create scissors, paper,rock</string>
+    <string name="but_join">Join room</string>
+    <string name="cod_sala">Room Code: </string>
+    <string name="turno">"Turn: "</string>
+    <string name="winner">¡Winner!</string>
+    <string name="Looser">¡Looser!</string>
+    <string name="Esperando">Waiting…</string>
+    <string name="Piedra">Rock</string>
+    <string name="Papel">Paper</string>
+    <string name="Tijeras">Scissors</string>
+
+</resources>

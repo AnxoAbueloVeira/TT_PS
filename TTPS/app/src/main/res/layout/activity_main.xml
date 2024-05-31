@@ -5,40 +5,40 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/et_code"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/Hint"/>
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/but_create_tictactoe"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/but_create_tictactoe"
-        android:layout_marginTop="20dp"/>
+        <EditText
+            android:id="@+id/et_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/Hint"/>
 
-    <Button
-        android:id="@+id/but_create_rps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/but_create_rps"
-        android:layout_marginTop="20dp"/>
+        <Button
+            android:id="@+id/but_create_tictactoe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/but_create_tictactoe"
+            android:layout_marginTop="20dp"/>
 
-    <Button
-        android:id="@+id/but_create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/but_create"/>
+        <Button
+            android:id="@+id/but_create_rps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/but_create_rps" />
 
-    <Button
-        android:id="@+id/but_join"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/but_join"/>
+        <Button
+            android:id="@+id/but_join"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/but_join"
+            android:layout_marginTop="20dp"/>
 
-
+    </LinearLayout>
 
 </LinearLayout>
