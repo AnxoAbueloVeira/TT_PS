@@ -41,9 +41,6 @@ public class RPSGameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rps);
 
-
-
-
         tv_code = findViewById(R.id.tv_code);
         tv_status = findViewById(R.id.tv_status);
         btn_rock = findViewById(R.id.btn_rock);
@@ -65,12 +62,12 @@ public class RPSGameActivity extends AppCompatActivity {
                         gameRef.child("players").get().addOnCompleteListener(playerTask -> {
                             if (playerTask.isSuccessful()) {
                                 long playerCount = playerTask.getResult().getChildrenCount();
-                                if (playerCount == 1){
-                                    //gameRef.child("playerId").child(currentUserUid).setValue(1);
+                                if (playerCount == 1) {
+                                    // gameRef.child("playerId").child(currentUserUid).setValue(1);
 
                                 }
-                                if (playerCount == 2){
-                                    //gameRef.child("playerId").child(currentUserUid).setValue(2);
+                                if (playerCount == 2) {
+                                    // gameRef.child("playerId").child(currentUserUid).setValue(2);
 
                                 }
                                 if (playerCount > 2) {
@@ -84,32 +81,30 @@ public class RPSGameActivity extends AppCompatActivity {
                     }
                 });
 
-
-            DatabaseReference playerIdRef = gameRef.child("playerId").child(currentUserUid);
-            playerIdRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        playerId = snapshot.getValue(Integer.class);
-                    } else {
-                        // Manejar el caso donde no se encuentra ningún playerId asociado al usuario actual.
-                    }
+        DatabaseReference playerIdRef = gameRef.child("playerId").child(currentUserUid);
+        playerIdRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    playerId = snapshot.getValue(Integer.class);
+                } else {
+                    // Manejar el caso donde no se encuentra ningún playerId asociado al usuario actual.
                 }
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    // Manejar errores de Firebase Database.
-                }
-            });
-
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // Manejar errores de Firebase Database.
+            }
+        });
 
         listenForGameChanges();
     }
 
-
     private void makeMove(String move) {
         if (isGameActive) {
             playerMove = move;
+            disableButtons(); // Llamada para deshabilitar los botones
             gameRef.child("moves").child(FirebaseAuth.getInstance().getUid()).setValue(move).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     checkWinner();
@@ -120,19 +115,27 @@ public class RPSGameActivity extends AppCompatActivity {
         }
     }
 
+    private void disableButtons() {
+        btn_rock.setEnabled(false);
+        btn_paper.setEnabled(false);
+        btn_scissors.setEnabled(false);
+    }
+
     private void checkWinner() {
         gameRef.child("moves").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() == 2) {
                     String opponentMove = null;
+                    String opponentUid = null;
                     for (DataSnapshot moveSnapshot : snapshot.getChildren()) {
                         if (!moveSnapshot.getKey().equals(currentUserUid)) {
                             opponentMove = moveSnapshot.getValue(String.class);
+                            opponentUid = moveSnapshot.getKey();
                         }
                     }
                     if (opponentMove != null && !opponentMove.equals("waiting")) {
-                        determineWinner(playerMove, opponentMove);
+                        determineWinner(playerMove, opponentMove, opponentUid);
                     }
                 }
             }
@@ -144,7 +147,7 @@ public class RPSGameActivity extends AppCompatActivity {
         });
     }
 
-    private void determineWinner(String playerMove, String opponentMove) {
+    private void determineWinner(String playerMove, String opponentMove, String opponentUid) {
         String result;
         if (playerMove.equals(opponentMove)) {
             result = "Empate";
@@ -158,53 +161,67 @@ public class RPSGameActivity extends AppCompatActivity {
             result = "¡Perdedor!";
         }
 
-        endGame(result);
+        endGame(result, opponentUid, playerMove, opponentMove);
     }
 
-    private void endGame(String result) {
+    private void endGame(String result, String opponentUid, String playerMove, String opponentMove) {
         isGameActive = false;
-        gameRef.child("status").setValue(result); // Establece el resultado para ambos jugadores
+        String opponentResult;
+
+        // Determine opponent's result based on player's result
+        if (result.equals("¡Ganador!")) {
+            opponentResult = "¡Perdedor!";
+        } else if (result.equals("¡Perdedor!")) {
+            opponentResult = "¡Ganador!";
+        } else {
+            opponentResult = "Empate";
+        }
+
+        // Update the state for both players
+        gameRef.child("state").child(currentUserUid).setValue(result);
+        gameRef.child("state").child(opponentUid).setValue(opponentResult);
 
         tv_status.setText(result);
-        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+
     }
 
-
-
-
-
     private void listenForGameChanges() {
-        gameRef.child("status").addChildEventListener(new ChildEventListener() {
-
+        gameRef.child("state").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                updateGameState(snapshot);
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                String value = snapshot.getValue(String.class);
-                // Verifica si el estado ha cambiado para el jugador actual
-                if (snapshot.getKey().equals(currentUserUid)) {
-                    checkWinner(); // Comprobar si hay un ganador
-                }
+                updateGameState(snapshot);
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
+                // Manejar la eliminación si es necesario
             }
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                // Manejar el movimiento si es necesario
             }
-
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 // Manejar errores de Firebase Database.
             }
         });
+    }
+
+    private void updateGameState(@NonNull DataSnapshot snapshot) {
+        String value = snapshot.getValue(String.class);
+        String uid = snapshot.getKey();
+        if (uid != null && value != null) {
+            if (uid.equals(currentUserUid)) {
+                // Actualizar la interfaz del jugador actual
+                tv_status.setText(value);
+            }
+        }
     }
 }
