@@ -14,6 +14,20 @@
         android:hint="@string/Hint"/>
 
     <Button
+        android:id="@+id/but_create_tictactoe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/but_create_tictactoe"
+        android:layout_marginTop="20dp"/>
+
+    <Button
+        android:id="@+id/but_create_rps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/but_create_rps"
+        android:layout_marginTop="20dp"/>
+
+    <Button
         android:id="@+id/but_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

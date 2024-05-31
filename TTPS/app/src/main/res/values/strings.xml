@@ -2,9 +2,16 @@
     <string name="app_name">TT.PS</string>
     <string name="Hint">Ingrese el código de la sala</string>
     <string name="but_create">Crear Sala</string>
+    <string name="but_create_tictactoe">Crear 3 en raya</string>
+    <string name="but_create_rps">Crear Piedra, papel o tijera</string>
     <string name="but_join">Unirse a Sala</string>
     <string name="cod_sala">Código de la sala: </string>
     <string name="turno">"Turno: "</string>
     <string name="winner">¡Ganador!</string>
     <string name="Looser">¡Perdedor!</string>
+    <string name="Esperando">Esperando…</string>
+    <string name="Piedra">Piedra</string>
+    <string name="Papel">Papel</string>
+    <string name="Tijeras">Tijeras</string>
+
 </resources>

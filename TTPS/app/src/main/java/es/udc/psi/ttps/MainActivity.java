@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String TAG = "_TAG";
     EditText et_code;
-    Button but_create, but_join;
+    Button but_create_tictactoe, but_create_rps, but_join;
 
     DatabaseReference database;
     FirebaseAuth mAuth;
@@ -36,12 +36,14 @@ public class MainActivity extends AppCompatActivity {
         signInAnonymously();
 
         et_code = findViewById(R.id.et_code);
-        but_create = findViewById(R.id.but_create);
+        but_create_tictactoe = findViewById(R.id.but_create_tictactoe);
+        but_create_rps = findViewById(R.id.but_create_rps);
         but_join = findViewById(R.id.but_join);
 
         database = FirebaseDatabase.getInstance().getReference();
 
-        but_create.setOnClickListener(v -> createGame());
+        but_create_tictactoe.setOnClickListener(v -> createGame("tictactoe"));
+        but_create_rps.setOnClickListener(v -> createGame("rps"));
         but_join.setOnClickListener(v -> joinGame());
     }
 
@@ -55,9 +57,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void createGame() {
+    private void createGame(String gameType) {
         String code = generateCode();
-        database.child("games").child(code).child("status").setValue("waiting").addOnCompleteListener(task -> {
+        database.child("games").child(code).child("status").setValue("waiting");
+        database.child("games").child(code).child("type").setValue(gameType).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("Game Code", code);
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(this, "Código copiado al portapapeles", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(this, GameActivity.class);
+                Intent intent = new Intent(this, gameType.equals("tictactoe") ? GameActivity.class : RPSGameActivity.class);
                 intent.putExtra("GAME_CODE", code);
                 startActivity(intent);
             } else {
@@ -79,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         database.child("games").child(code).get().addOnCompleteListener(task -> {
             if (task.isSuccessful() && task.getResult().exists()) {
-                Intent intent = new Intent(this, GameActivity.class);
+                String gameType = task.getResult().child("type").getValue(String.class);
+                Intent intent = new Intent(this, gameType.equals("tictactoe") ? GameActivity.class : RPSGameActivity.class);
                 intent.putExtra("GAME_CODE", code);
                 startActivity(intent);
             } else {
