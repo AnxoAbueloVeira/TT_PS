@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,7 @@ public class RPSGameActivity extends AppCompatActivity {
 
     DatabaseReference gameRef;
     TextView tv_code, tv_status;
-    Button btn_rock, btn_paper, btn_scissors;
+    ImageButton btn_rock, btn_paper, btn_scissors;
     String playerMove;
 
     int playerId;
@@ -167,13 +168,17 @@ public class RPSGameActivity extends AppCompatActivity {
     private void endGame(String result, String opponentUid, String playerMove, String opponentMove) {
         isGameActive = false;
         String opponentResult;
+        TextView animation;
 
         // Determine opponent's result based on player's result
         if (result.equals("¡Ganador!")) {
+            animation = findViewById(R.id.tv_winner);
             opponentResult = "¡Perdedor!";
         } else if (result.equals("¡Perdedor!")) {
+            animation = findViewById(R.id.tv_loser);
             opponentResult = "¡Ganador!";
         } else {
+            animation = null;
             opponentResult = "Empate";
         }
 
@@ -181,9 +186,22 @@ public class RPSGameActivity extends AppCompatActivity {
         gameRef.child("state").child(currentUserUid).setValue(result);
         gameRef.child("state").child(opponentUid).setValue(opponentResult);
 
+        // Animate result for both players
+        animateResult(animation);
+
         tv_status.setText(result);
 
     }
+
+    private void animateResult(TextView animation) {
+        if (animation != null) {
+            animation.setVisibility(View.VISIBLE);
+            Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+            animation.startAnimation(fadeIn);
+        }
+    }
+
+
 
     private void listenForGameChanges() {
         gameRef.child("state").addChildEventListener(new ChildEventListener() {
@@ -219,9 +237,25 @@ public class RPSGameActivity extends AppCompatActivity {
         String uid = snapshot.getKey();
         if (uid != null && value != null) {
             if (uid.equals(currentUserUid)) {
-                // Actualizar la interfaz del jugador actual
+                // Update UI for current player
                 tv_status.setText(value);
+                animateResultBasedOnValue(value);
             }
+        }
+    }
+
+    private void animateResultBasedOnValue(String result) {
+        TextView animation = null;
+        if (result.equals("¡Ganador!")) {
+            animation = findViewById(R.id.tv_winner);
+        } else if (result.equals("¡Perdedor!")) {
+            animation = findViewById(R.id.tv_loser);
+        }
+
+        if (animation != null) {
+            animation.setVisibility(View.VISIBLE);
+            Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+            animation.startAnimation(fadeIn);
         }
     }
 }

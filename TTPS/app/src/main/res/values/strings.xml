@@ -7,6 +7,7 @@
     <string name="cod_sala">Código de la sala: </string>
     <string name="turno">"Turno: "</string>
     <string name="winner">¡Ganador!</string>
+    <string name="draw">Empate</string>
     <string name="Looser">¡Perdedor!</string>
     <string name="Esperando">Esperando…</string>
     <string name="Piedra">Piedra</string>

@@ -25,39 +25,62 @@
         android:textSize="24sp"
         android:layout_marginTop="8dp" />
 
-    <Button
-        android:id="@+id/btn_paper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Papel"
-        android:layout_toLeftOf="@+id/btn_scissors"
-        android:layout_below="@id/tv_status"
-        android:textSize="24sp"
-        android:layout_marginTop="8dp"
-        />
-    <Button
-        android:id="@+id/btn_rock"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Piedra"
-        android:layout_below="@id/tv_status"
-        android:layout_toRightOf="@+id/btn_scissors"
-        android:textSize="24sp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        />
 
-    <Button
-        android:id="@+id/btn_scissors"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Tijeras"
+    <ImageButton
+        android:id="@+id/btn_rock"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+
         android:layout_below="@id/tv_status"
         android:layout_centerHorizontal="true"
-        android:textSize="24sp"
         android:layout_marginTop="8dp"
-        android:layout_marginRight="8dp"
-        />
+        android:src="@drawable/piedra"
+        android:contentDescription="TODO" />
+
+    <ImageButton
+        android:id="@+id/btn_paper"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+
+        android:layout_below="@id/btn_rock"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/papel"
+        android:contentDescription="TODO" />
+
+    <ImageButton
+        android:id="@+id/btn_scissors"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+
+        android:layout_below="@id/btn_paper"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/tijeras"
+        android:contentDescription="TODO" />
+
+
+    <TextView
+        android:id="@+id/tv_winner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/winner"
+        android:textSize="32sp"
+        android:textColor="@android:color/holo_green_dark"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/tv_loser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Looser"
+        android:textSize="32sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:gravity="center" />
 
 
 
