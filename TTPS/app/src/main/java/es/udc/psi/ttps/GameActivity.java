@@ -58,16 +58,16 @@ public class GameActivity extends AppCompatActivity {
                                     playerSymbol = "O";
                                 } else {
                                     isGameActive = false;
-                                    Toast.makeText(this, "Sala llena", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, getString(R.string.toast_room_full), Toast.LENGTH_SHORT).show();
                                     for (Button button : buttons) {
                                         button.setEnabled(false);
                                     }
                                 }
-                                tv_turn.setText(playerSymbol.equals("X") ? "Turno: X" : "Turno: O");
+                                tv_turn.setText(playerSymbol.equals("X") ? getString(R.string.turno)+ "X" : getString(R.string.turno) + "O");
                             }
                         });
                     } else {
-                        Toast.makeText(this, "Error al unirse a la sala", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.toast_error_joining), Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -98,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
                         gameRef.child("turn").setValue(playerSymbol.equals("X") ? "O" : "X");
                         checkWinner();
                     } else {
-                        Toast.makeText(this, "No es tu turno", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.toast_wrong_turn), Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -228,7 +228,7 @@ public class GameActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String turn = snapshot.getValue(String.class);
                 if (turn != null) {
-                    tv_turn.setText("Turno: " + turn);
+                    tv_turn.setText(getString(R.string.turno) + turn);
                 }
             }
 

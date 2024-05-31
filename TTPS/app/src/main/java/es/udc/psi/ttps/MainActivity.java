@@ -66,13 +66,13 @@ public class MainActivity extends AppCompatActivity {
                 ClipData clip = ClipData.newPlainText("Game Code", code);
                 clipboard.setPrimaryClip(clip);
 
-                Toast.makeText(this, "Código copiado al portapapeles", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_clippboard), Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, gameType.equals("tictactoe") ? GameActivity.class : RPSGameActivity.class);
                 intent.putExtra("GAME_CODE", code);
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "Error al crear la sala", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_error_room), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("GAME_CODE", code);
                 startActivity(intent);
             } else {
-                Toast.makeText(this, "Código de sala no válido", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.toast_wrong_code), Toast.LENGTH_SHORT).show();
             }
         });
     }

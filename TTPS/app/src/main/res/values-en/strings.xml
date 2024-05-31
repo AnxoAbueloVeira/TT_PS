@@ -12,5 +12,11 @@
     <string name="Piedra">Rock</string>
     <string name="Papel">Paper</string>
     <string name="Tijeras">Scissors</string>
-
+    <string name="toast_clippboard">Copied to clipboard</string>
+    <string name="toast_error_room">Error creating room</string>
+    <string name="toast_wrong_code">Wrong room code</string>
+    <string name="toast_wrong_turn">It\'s not your turn</string>
+    <string name="toast_error_joining">Error joining the room</string>
+    <string name="toast_room_full">Room full</string>
+    <string name="toast_error_move">Error while making the move</string>
 </resources>

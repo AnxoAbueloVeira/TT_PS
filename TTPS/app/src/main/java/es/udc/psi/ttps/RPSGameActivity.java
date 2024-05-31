@@ -72,12 +72,12 @@ public class RPSGameActivity extends AppCompatActivity {
                                 }
                                 if (playerCount > 2) {
                                     isGameActive = false;
-                                    Toast.makeText(this, "Sala llena", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(this, getString(R.string.toast_room_full), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
                     } else {
-                        Toast.makeText(this, "Error al unirse a la sala", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.toast_error_joining), Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -109,7 +109,7 @@ public class RPSGameActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     checkWinner();
                 } else {
-                    Toast.makeText(this, "Error al realizar el movimiento", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.toast_error_move), Toast.LENGTH_SHORT).show();
                 }
             });
         }

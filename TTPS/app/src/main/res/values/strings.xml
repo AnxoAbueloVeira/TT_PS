@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">TT.PS</string>
     <string name="Hint">Ingrese el código de la sala</string>
-    <string name="but_create">Crear Sala</string>
     <string name="but_create_tictactoe">Crear 3 en raya</string>
     <string name="but_create_rps">Crear Piedra, papel o tijera</string>
     <string name="but_join">Unirse a Sala</string>
@@ -13,5 +12,11 @@
     <string name="Piedra">Piedra</string>
     <string name="Papel">Papel</string>
     <string name="Tijeras">Tijeras</string>
-
+    <string name="toast_clippboard">Código copiado al portapapeles</string>
+    <string name="toast_error_room">Error al crear la sala</string>
+    <string name="toast_wrong_code">Código de sala no válido</string>
+    <string name="toast_wrong_turn">No es tu turno</string>
+    <string name="toast_error_joining">Error al unirse a la sala</string>
+    <string name="toast_room_full">Sala llena</string>
+    <string name="toast_error_move">Error al realizar el movimiento</string>
 </resources>
